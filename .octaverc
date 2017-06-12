@@ -1,0 +1,26 @@
+edit home .
+EDITOR('vim > /dev/tty 2>&1 < /dev/tty %s')
+
+setenv("GNUTERM","qt")
+## use man instead of help
+function man (name = "help");
+    mlock (); # lock in memory so it's not removed by clear all
+    help (char (name));
+endfunction
+
+
+edit ("mode", "sync");
+
+## pretty prompt
+PS1 ("\\[\\033[01;31m\\]\\s:\\#> \\[\\033[0m\\]");
+## no > for multi-line input
+PS2 ("");
+
+## default image size to take the right half of the monitor
+set (0,
+        "DefaultFigurePosition",
+        [get(0, "screensize")(3)/2    1 ...
+        get(0, "screensize")(3)/2    get(0, "screensize")(4)]
+    );
+
+graphics_toolkit("gnuplot")
