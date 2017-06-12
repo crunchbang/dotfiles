@@ -1,7 +1,5 @@
 # dotfiles
-Collection of dotfiles to customize the environment to my preference. 
-
-## Inspired By [dotfiles](https://dotfiles.github.io/)
+Collection of dotfiles to customize the environment to my preference. Inspired by [dotfiles](https://dotfiles.github.io/).
 
 ## License
 
