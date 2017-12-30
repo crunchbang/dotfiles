@@ -53,7 +53,7 @@ plugins=(git vi-mode brew colored-man-pages)
 
 # User configuration
 
-# export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/opt/llvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -82,14 +82,19 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH="$HOME/anaconda/bin:/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+#export PATH="$HOME/anaconda/bin:/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 #export PATH="/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 alias octave="octave-cli"
 alias tmux="tmux -u"
-alias work="cd /Users/athul/src/project/sports_inventory"
-#alias gcc="gcc-6"
+alias git_pretty="git log --all --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # OPAM configuration
 #. /Users/athul/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 #eval `opam config env`
+
+#Java CLASSPATH & ANTLR
+export CLASSPATH=".:/usr/local/lib/antlr-4.7-complete.jar:/Users/athul/src/SymTest/bin:$CLASSPATH"
+alias antlr4='java -jar /usr/local/lib/antlr-4.7-complete.jar'
+alias grun='java org.antlr.v4.gui.TestRig'
+

@@ -1,54 +1,103 @@
-" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+" .vimrc 
+" Last modified on Sat Dec 30 16:40:03 IST 2017
+
+" specify a directory for plugins 
 call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/goyo.vim'
-Plug 'vimwiki/vimwiki'
-
-" On-demand loading
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
-
-" Initialize plugin system
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/goyo.vim'
+Plug 'neovimhaskell/haskell-vim', { 'for' : 'haskell' } 
+" initialize plugin system
 call plug#end()
 
-" Necessary for lots of cool vim things
+" necessary for lots of cool vim things
 set nocompatible
-"enable syntax highlighting 
+"
+" keep the file within vim updated if it has been modified from the outside
+set autoread
+
+" enable syntax highlighting 
 syntax on
+" fix for vim's utter oblviousness when it comes to .md files
+au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md  set ft=markdown
 " load filetype-specific indent files
 filetype plugin indent on
+
+" gotta look good
+set background=dark
+set t_Co=256
+colorscheme solarized
+" the holy limit
+set textwidth=80
+
 " show line number
 set number
 set relativenumber
+
+" indentation magic
 set smartindent
 set autoindent
-let mapleader=","
+
+" highlight the line containing the cursor
+set cursorline
+" always show status line
+set laststatus=2
 " show command in bottom bar
 set showcmd
-
-" set cursorline
-set laststatus=2
+" show line and colum no. of cursor position
 set ruler
+" autocomplete commands
 set wildmenu
+
+" incremental search
 set incsearch
+" highlight all matches
 set hlsearch
-nnoremap <space><space> :nohlsearch<CR>
+
 " number of visual spacs per TAB
 set tabstop=4
 " number of spaces in tab when editing
 set softtabstop=4
-" tabs are spaces
+" tabs are converted to spaces
 set expandtab
 
+" remap leader key to ,
+let mapleader=","
+
+" folds
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 "space open/close folds
 noremap <space> za
 set foldmethod=syntax
+set foldmethod=manual
+
+" vimwiki
+" let g:vimwiki_list = [{'path': '$HOME/Documents/the_system', 'syntax':
+" 'markdown', 'ext': '.md'}] - alternate style
+let g:vimwiki_list = [{'path': '$HOME/Documents/the_system'}]
+let g:vimwiki_dir_link = 'index'
+
+" NERDTree
+" key shortcut
+map <C-n> :NERDTreeToggle<CR>
+
+" Goyo
+let g:goyo_width = 90
+
+" easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Simplify help navigation - see ftplugin/help.vim
+
+" misc stuff
 
 " jk is escape
 " inoremap jk <esc>
@@ -56,42 +105,4 @@ set foldmethod=syntax
 " set spell check
 " set spell spelllang=en_us
 
-set background=dark
-set t_Co=256
-" colorscheme solarized
-
-" Keep the file within vim updated if it has been modified from the outside
-set autoread
-
-" For YCM
-"let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-"let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-"let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-"let g:ycm_complete_in_comments = 1 " Completion in comments
-"let g:ycm_complete_in_strings = 1 " Completion in string
-
-" For NERDTree
-" open a NERDTree automatically when vim starts up if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" key shortcut
-map <C-n> :NERDTreeToggle<CR>
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"vimwiki
-let g:vimwiki_list = [{'path': '$HOME/Documents/wiki'}]
-":autocmd FileType vimwiki map d :VimwikiMakeDiaryNote
-"function! ToggleCalendar()
-"  execute ":Calendar"
-"  if exists("g:calendar_open")
-"    if g:calendar_open == 1
-"      execute "q"
-"      unlet g:calendar_open
-"    else
-"      g:calendar_open = 1
-"    end
-"  else
-"    let g:calendar_open = 1
-"  end
-"endfunction
+" nnoremap <space><space> :nohlsearch<CR>
