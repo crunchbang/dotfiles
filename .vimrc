@@ -15,9 +15,12 @@ call plug#end()
 
 " necessary for lots of cool vim things
 set nocompatible
-"
+
 " keep the file within vim updated if it has been modified from the outside
 set autoread
+
+" organize swap files
+set directory^=$HOME/.vim/tmp//
 
 " enable syntax highlighting 
 syntax on
@@ -30,8 +33,15 @@ filetype plugin indent on
 set background=dark
 set t_Co=256
 colorscheme solarized
+" spellcheck 
+hi clear SpellBad
+hi SpellBad cterm=underline
+autocmd FileType markdown,vimwiki setlocal spell
 " the holy limit
 set textwidth=80
+
+" width for '>'
+set shiftwidth=4
 
 " show line number
 set number
@@ -94,6 +104,13 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" easy timestamp
+map <C-D> :r!date "+\%Y-\%m-\%d"<CR>
+
+" easy filename
+map <C-F> :put=expand('%:t:r')<CR>
+
 
 " Simplify help navigation - see ftplugin/help.vim
 
