@@ -1,125 +1,104 @@
-" .vimrc 
-" Last modified on Sat Dec 30 16:40:03 IST 2017
+" Last modified on 2019-07-04 14:51:23
 
-" specify a directory for plugins 
+" PLUGINS
 call plug#begin('~/.vim/plugged')
+
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdcommenter'
-Plug 'vimwiki/vimwiki'
-Plug 'junegunn/goyo.vim'
-Plug 'neovimhaskell/haskell-vim', { 'for' : 'haskell' } 
-" initialize plugin system
+Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/vim-easy-align'
+Plug 'godlygeek/tabular'
+Plug 'mattn/emmet-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/Alok/notational-fzf-vim'
+
+"Plug 'fatih/vim-go',      { 'do': ':GoUpdateBinaries' }
+"Plug 'reedes/vim-pencil', { 'for': ['markdown', 'txt'] }
+
 call plug#end()
 
-" necessary for lots of cool vim things
-set nocompatible
-
-" keep the file within vim updated if it has been modified from the outside
-set autoread
-
-" organize swap files
-set directory^=$HOME/.vim/tmp//
-
-" enable syntax highlighting 
-syntax on
-" fix for vim's utter oblviousness when it comes to .md files
-au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md  set ft=markdown
-" load filetype-specific indent files
-filetype plugin indent on
-
-" gotta look good
-set background=dark
-set t_Co=256
-colorscheme solarized
-" spellcheck 
-hi clear SpellBad
-hi SpellBad cterm=underline
-autocmd FileType markdown,vimwiki setlocal spell
-" the holy limit
-set textwidth=80
-
-" width for '>'
-set shiftwidth=4
-
-" show line number
-set number
+set directory^=$HOME/.vim/tmp//  " organize swap files
+set nocompatible                 " necessary for lots of cool vim things
+set autoread                     " keep the file within vim updated if it has been modified from the outside
+syntax on                        " enable syntax highlighting
+filetype plugin indent on        " load filetype-specific indent files
+set shiftwidth=4                 " width for '>'
+set number                       " show line number
 set relativenumber
-
-" indentation magic
 set smartindent
 set autoindent
+set cursorline                   " highlight the line containing the cursor
+set laststatus=2                 " always show status line
+set showcmd                      " show command in bottom bar
+set ruler                        " show line and colum no. of cursor position
+set wildmenu                     " autocomplete commands
+set incsearch                    " incremental search
+set hlsearch                     " highlight all matches
+set tabstop=4                    " number of visual spacs per TAB
+set softtabstop=4                " number of spaces in tab when editing
+set expandtab                    " tabs are converted to spaces
+let mapleader=","                " remap leader key to ,
 
-" highlight the line containing the cursor
-set cursorline
-" always show status line
-set laststatus=2
-" show command in bottom bar
-set showcmd
-" show line and colum no. of cursor position
-set ruler
-" autocomplete commands
-set wildmenu
 
-" incremental search
-set incsearch
-" highlight all matches
-set hlsearch
+" utilities 
+map <C-D> :r!date "+\%Y-\%m-\%d \%H:\%M:\%S"<CR> 
+map <C-F> :put=expand('%:t:r')<CR> 
 
-" number of visual spacs per TAB
-set tabstop=4
-" number of spaces in tab when editing
-set softtabstop=4
-" tabs are converted to spaces
-set expandtab
+" use ctrl-[hjkl] to select the active split!
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
 
-" remap leader key to ,
-let mapleader=","
+" undo forever
+set undodir=~/.vim/undo-dir
+set undofile
+
+" notational velocity 
+map <C-n> :NV<CR>
+let g:nv_search_paths = ['~/wiki', '~/writing', '~/code', 'docs.md' , './notes.md']
+let g:nv_default_extension = '.md'
+
+" gvim 
+if has("gui_running")
+    set guifont=Ubuntu\ Mono\ 15
+    set lines=999 columns=999
+    " simulate normal copy paste behavior
+    vmap <C-c> "+yi
+    vmap <C-x> "+c
+    vmap <C-v> c<ESC>"+p
+    imap <C-v> <C-r><C-o>+
+endif
+
+set conceallevel=2
+
+" Emmet
+let g:user_emmet_leader_key=','
+
+" fzf
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " folds
-set foldenable
-set foldlevelstart=10
-set foldnestmax=10
+" set foldenable
+" set foldlevelstart=10
+" set foldnestmax=10
 "space open/close folds
-noremap <space> za
-set foldmethod=syntax
-set foldmethod=manual
+" noremap <space> za
+" set foldmethod=syntax
+" set foldmethod=manual
 
-" vimwiki
-" let g:vimwiki_list = [{'path': '$HOME/Documents/the_system', 'syntax':
-" 'markdown', 'ext': '.md'}] - alternate style
-let g:vimwiki_list = [{'path': '$HOME/Documents/the_system'}]
-let g:vimwiki_dir_link = 'index'
-
-" NERDTree
-" key shortcut
-map <C-n> :NERDTreeToggle<CR>
-
-" Goyo
-let g:goyo_width = 90
-
-" easier split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" easy timestamp
-map <C-D> :r!date "+\%Y-\%m-\%d"<CR>
-
-" easy filename
-map <C-F> :put=expand('%:t:r')<CR>
-
-
-" Simplify help navigation - see ftplugin/help.vim
-
-" misc stuff
-
-" jk is escape
-" inoremap jk <esc>
-
-" set spell check
-" set spell spelllang=en_us
-
-" nnoremap <space><space> :nohlsearch<CR>
+" vim-go stuff
+"let g:go_def_mode='gopls'
+"let g:go_info_mode='gopls'
+"let g:go_autodetect_gopath = 0
+"let g:go_highlight_types = 1
+"let g:go_highlight_fields = 1
+"let g:go_highlight_functions = 1
+"let g:go_highlight_functions = 1
+"let g:go_fmt_command = "goimports"
+"let g:go_metalinter_autosave = 1
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+"autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
