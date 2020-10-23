@@ -1,16 +1,19 @@
-" Last modified on 2019-07-04 14:51:23
+" Last modified on 2020-05-30
 
 " PLUGINS
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
-Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 Plug 'godlygeek/tabular'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/Alok/notational-fzf-vim'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'junegunn/limelight.vim' " Highlights only active paragraph
+Plug 'junegunn/goyo.vim' " Full screen writing mode
 
 "Plug 'fatih/vim-go',      { 'do': ':GoUpdateBinaries' }
 "Plug 'reedes/vim-pencil', { 'for': ['markdown', 'txt'] }
@@ -41,8 +44,8 @@ let mapleader=","                " remap leader key to ,
 
 
 " utilities 
-map <C-D> :r!date "+\%Y-\%m-\%d \%H:\%M:\%S"<CR> 
-map <C-F> :put=expand('%:t:r')<CR> 
+nmap <C-D> i<C-R>=strftime("%Y-%m-%d %I:%M:%S")<CR><Esc>
+imap <C-D> <C-R>=strftime("%Y-%m-%d %I:%M:%S")<CR>
 
 " use ctrl-[hjkl] to select the active split!
 nmap <silent> <c-k> :wincmd k<CR>
@@ -56,19 +59,21 @@ set undofile
 
 " notational velocity 
 map <C-n> :NV<CR>
-let g:nv_search_paths = ['~/wiki', '~/writing', '~/code', 'docs.md' , './notes.md']
+let g:nv_search_paths = ['~/wiki', '~/writing', '~/code', 'docs.md' , './notes.md', '/Users/athul/src/blog/adventures-with-code/content/books']
 let g:nv_default_extension = '.md'
 
+set guifont=Monaco:h15
 " gvim 
-if has("gui_running")
-    set guifont=Ubuntu\ Mono\ 15
-    set lines=999 columns=999
-    " simulate normal copy paste behavior
-    vmap <C-c> "+yi
-    vmap <C-x> "+c
-    vmap <C-v> c<ESC>"+p
-    imap <C-v> <C-r><C-o>+
-endif
+"if has("gui_running")
+"    set guifont=Monaco\ 15
+"    set lines=999 columns=999
+"    " simulate normal copy paste behavior
+"    vmap <C-c> "+yi
+"    vmap <C-x> "+c
+"    vmap <C-v> c<ESC>"+p
+"    imap <C-v> <C-r><C-o>+
+"    autocmd VimEnter * NERDTree
+"endif
 
 set conceallevel=2
 
@@ -78,6 +83,9 @@ let g:user_emmet_leader_key=','
 " fzf
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
+
+" Ag
+nnoremap <silent> <leader>a :Ag<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -102,3 +110,13 @@ nnoremap <silent> <leader>b :Buffers<CR>
 "let g:go_metalinter_autosave = 1
 "let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 "autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
+
+" Experimental
+" nmap =j :%!python -m json.tool<CR>
+nmap =j :%!jq '.'<CR>
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Cscop
+cs add /Users/athul/src/x86_stuff/linux-5.7.6
