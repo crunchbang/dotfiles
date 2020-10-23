@@ -53,7 +53,8 @@ plugins=(git vi-mode brew colored-man-pages)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/opt/llvm/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/opt/llvm/bin:/Users/athul/go/bin:$HOME/.cargo/bin"
+export PATH="$HOME/.cargo/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -84,6 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #export PATH="$HOME/anaconda/bin:/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 #export PATH="/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+export GOPATH="$HOME/go"
 
 alias octave="octave-cli"
 alias tmux="tmux -u"
@@ -98,3 +100,10 @@ export CLASSPATH=".:/usr/local/lib/antlr-4.7-complete.jar:/Users/athul/src/SymTe
 alias antlr4='java -jar /usr/local/lib/antlr-4.7-complete.jar'
 alias grun='java org.antlr.v4.gui.TestRig'
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/athul/.sdkman"
+[[ -s "/Users/athul/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/athul/.sdkman/bin/sdkman-init.sh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH=/Users/athul/.tiup/bin:$PATH
